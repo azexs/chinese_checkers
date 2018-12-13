@@ -4,29 +4,44 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class Player {
-
-    char color;
+public class Player extends Thread {
     Socket socket;
-    BufferedReader input;
-    PrintWriter output;
+    Game game;
 
 
-
-    public Player(Socket socket, char color) {
+    public Player(Socket socket, Game game) {
         this.socket = socket;
-        this.color = color;
-        try {
-            input = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-            output = new PrintWriter(socket.getOutputStream(), true);
-            output.println("WELCOME " + color);
-            output.println("MESSAGE Waiting for opponent to connect");
-        } catch (IOException e) {
-            System.out.println("Player died: " + e);
-        }
+        this.game = game;
     }
 
+
+    public void run() {
+        try {
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+            while (true) {
+                String input = in.readLine();
+                if (input == null || input.equals(".")) {
+                    break;
+                }
+                String[] separated = input.split(" ");
+                String[] pawnpos1 = separated[1].split("\\.");
+                String[] pawnpos2 = separated[2].split("\\.");
+                out.println("MOVE" + " " + pawnpos1[0] + " " + pawnpos1[1] + " " + pawnpos2[0] + " " + pawnpos2[1]);
+            }
+        } catch (IOException e) {
+            //
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                //
+            }
+            //
+        }
+    }
 
 
 }
