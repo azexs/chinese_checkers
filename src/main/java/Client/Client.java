@@ -14,13 +14,19 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
+
 public class Client extends Application implements Runnable {
 
     Socket socket;
     private BufferedReader in;
     private PrintWriter out;
+    Colours colours;
 
     Color color;
+    boolean isPlayerRound;
 
     Pawn selectedPawn;
     GraphicBoard board;
@@ -40,14 +46,19 @@ public class Client extends Application implements Runnable {
 
     @Override
     public void start(Stage primaryStage) {
+
         pane = new Pane();
         board = new GraphicBoard();
+        colours = Colours.getInstance();
+
         setPositions();
         addListeners();
+
         Scene scene = new Scene(pane, 13 * 40, 17 * 40);
         primaryStage.setTitle("Chinese Checkers");
         primaryStage.setScene(scene);
         primaryStage.show();
+
 
         Thread serverListener = new Thread(this);
         serverListener.start();
@@ -105,18 +116,23 @@ public class Client extends Application implements Runnable {
                         pos = (Pawn) target;
                     }
 
-                    if (selectedPawn != null) {
-                        selectedPawn.setStroke(Color.GRAY);
-                        selectedPawn.setStrokeWidth(2);
-                        out.println("MOVE" + " " + getPos(selectedPawn) + " " + getPos(pos));
-                        System.out.println("MOVE" + " " + getPos(selectedPawn) + " " + getPos(pos));
+                    if (isPlayerRound) {
+                        if (selectedPawn != null) {
+                            if (pos.getFill() == Color.GREY) {
+                                selectedPawn.setStroke(Color.GRAY);
+                                selectedPawn.setStrokeWidth(2);
+                                out.println("MOVE" + " " + getPos(selectedPawn) + " " + getPos(pos));
+                                System.out.println("MOVE" + " " + getPos(selectedPawn) + " " + getPos(pos));
 
-                        selectedPawn = null;
-                    } else {
-                        selectedPawn = pos;
-                        selectedPawn.setStroke(Color.YELLOW);
-                        selectedPawn.setStrokeWidth(4);
-
+                                selectedPawn = null;
+                            }
+                        } else {
+                            if (pos.getFill() == color) {
+                                selectedPawn = pos;
+                                selectedPawn.setStroke(Color.YELLOW);
+                                selectedPawn.setStrokeWidth(4);
+                            }
+                        }
                     }
 
 
@@ -143,6 +159,7 @@ public class Client extends Application implements Runnable {
         try {
             while (true) {
                 response = in.readLine();
+                System.out.println(response);
                 if (response.startsWith("MOVE")) {
 
                     String[] split;
@@ -159,8 +176,18 @@ public class Client extends Application implements Runnable {
                     board.getPawn(par21, par22).setFill(temPawn.getFill());
                     temPawn.setFill(Color.GREY);
 
+                    if (isPlayerRound) out.println("NEXTPLAYER");
 
-                } else if (response.startsWith("OPPONENT_MOVED")) {
+
+                } else if (response.startsWith("YOURTURN")) {
+                    isPlayerRound = TRUE;
+
+                } else if (response.startsWith("ENDROUND")) {
+                    isPlayerRound = FALSE;
+
+                } else if (response.startsWith("COLOR")) {
+                    color = colours.get(Integer.parseInt(response.substring(6)));
+                } else if (response.startsWith("QUIT")) {
                     break;
                 }
             }

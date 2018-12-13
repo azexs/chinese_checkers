@@ -12,6 +12,8 @@ public class Server {
                 Game game = new Game(2);
                 game.players[0] = new Player(listener.accept(), game);
                 game.players[0].start();
+                game.players[1] = new Player(listener.accept(), game);
+                game.players[1].start();
             }
         } finally {
             listener.close();
