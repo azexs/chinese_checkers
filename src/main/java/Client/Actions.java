@@ -34,18 +34,23 @@ public class Actions {
 
                     if (main.client.isPlayerRound) {
                         if (selectedPawn != null) {
-                            if (pos.getFill() == Color.GREY) {
-                                selectedPawn.setStroke(Color.GRAY);
-                                selectedPawn.setStrokeWidth(2);
+                            if (pos.getFill() == main.client.color) {
+                                selectedPawn.setStrokeWidth(0);
+                                selectedPawn = pos;
+                                selectedPawn.setStroke(Color.BLACK);
+                                selectedPawn.setStrokeWidth(4);
+
+                            } else if (pos.getFill() == Color.GREY) {
+                                selectedPawn.setStroke(Color.GREY);
+                                selectedPawn.setStrokeWidth(0);
                                 main.connector.out.println("MOVE" + " " + getPos(selectedPawn) + " " + getPos(pos));
                                 System.out.println("MOVE" + " " + getPos(selectedPawn) + " " + getPos(pos));
-
                                 selectedPawn = null;
                             }
                         } else {
                             if (pos.getFill() == main.client.color) {
                                 selectedPawn = pos;
-                                selectedPawn.setStroke(Color.YELLOW);
+                                selectedPawn.setStroke(Color.BLACK);
                                 selectedPawn.setStrokeWidth(4);
                             }
                         }

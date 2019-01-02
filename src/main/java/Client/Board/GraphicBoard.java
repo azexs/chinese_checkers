@@ -15,8 +15,14 @@ public class GraphicBoard {
             case 2:
                 boardBuilder = new TwoPlayersBoard();
                 break;
+            case 3:
+                boardBuilder = new ThreePlayersBoard();
+                break;
             case 4:
                 boardBuilder = new FourPlayersBoard();
+                break;
+            case 6:
+                boardBuilder = new SixPlayersBoard();
                 break;
 
         }

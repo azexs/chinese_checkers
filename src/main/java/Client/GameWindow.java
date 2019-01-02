@@ -1,6 +1,7 @@
 package Client;
 
 import Client.Board.GraphicBoard;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,10 +29,11 @@ public class GameWindow {
 
         HBox hbox = new HBox(15);
         VBox vbox = new VBox();
+        hbox.setAlignment(Pos.CENTER_LEFT);
 
         Button endTurn = new Button("END TURN");
         status = new Label("Waiting for players");
-        Label label = new Label("You are");
+        Label label = new Label("\t\t\t\t\t\tYou are");
         Circle circle = new Circle(7);
         circle.setFill(main.client.color);
         hbox.getChildren().addAll(endTurn, status, label, circle);

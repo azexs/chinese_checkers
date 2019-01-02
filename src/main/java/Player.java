@@ -44,8 +44,7 @@ public class Player extends Thread {
             out.println("HELLO " + server.games.size());
 
             while (true) {
-                String input = "";
-                input = in.readLine();
+                String input = in.readLine();
                 if (input.startsWith("MOVE")) {
                     System.out.println(input);
 

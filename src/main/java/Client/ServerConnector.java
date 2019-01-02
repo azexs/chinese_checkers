@@ -89,7 +89,6 @@ public class ServerConnector extends Thread {
 
                     });
 
-
                 } else if (response.startsWith("QUIT")) {
                     break;
                 }
