@@ -9,14 +9,27 @@ public class Player extends Thread {
     Game game;
     BufferedReader in;
     PrintWriter out;
+    Server server;
+    private int id;
 
 
-    public Player(Socket socket, Game game) throws IOException {
+    public Player(Socket socket, Server server) throws IOException {
         this.socket = socket;
-        this.game = game;
+        this.server = server;
+        in = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
+        out = new PrintWriter(socket.getOutputStream(), true);
     }
 
     private void sendToAllPlayers(String msg) {
+
+        for (Player p : server.connectedClients) {
+            p.out.println(msg);
+        }
+
+    }
+
+    private void sendToAllGamePlayers(String msg) {
 
         for (Player p : game.players) {
             p.out.println(msg);
@@ -27,18 +40,8 @@ public class Player extends Thread {
 
     public void run() {
         try {
-            in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
 
-            game.connectedPlayers++;
-            out.println("COLOR " + game.connectedPlayers);
-
-            if (game.connectedPlayers == game.totalplayers) {
-                game.currentPlayer = game.players[0];
-                game.currentPlayer.out.println("YOURTURN");
-            }
-
+            out.println("HELLO " + server.games.size());
 
             while (true) {
                 String input = "";
@@ -70,6 +73,29 @@ public class Player extends Thread {
                     }
 
                     game.currentPlayer.out.println("YOURTURN");
+
+                } else if (input.startsWith("JOIN")) {
+                    input = input.substring(4);
+                    System.out.println(input);
+                    game = server.games.get(Integer.parseInt(input));
+                    game.players[game.connectedPlayers] = this;
+                    id = game.connectedPlayers;
+                    game.connectedPlayers++;
+
+                    out.println("JOINED" + id + "" + game.totalplayers);
+
+                    if (game.connectedPlayers == game.totalplayers) {
+                        game.currentPlayer = game.players[0];
+                        sendToAllPlayers("START");
+                        game.currentPlayer.out.println("YOURTURN");
+                    }
+
+
+                } else if (input.startsWith("CREATEGAME")) {
+                    int size = Integer.parseInt(input.substring(10, 11));
+                    System.out.println(size);
+                    server.games.add(new Game(size));
+                    sendToAllPlayers("CREATED");
 
                 }
 

@@ -1,24 +1,41 @@
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 public class Server {
 
 
+    List<Game> games;
+
+    List<Player> connectedClients;
+
+    ServerSocket serverSocket;
+
+    public Server() throws IOException {
+        games = new ArrayList<>();
+        connectedClients = new ArrayList<>();
+        serverSocket = new ServerSocket(2137);
+    }
+
     public static void main(String[] args) throws IOException {
-        ServerSocket listener = new ServerSocket(2137);
-        try {
-            while (true) {
-                Game game = new Game(2);
-                game.players[0] = new Player(listener.accept(), game);
-                game.players[0].start();
-                game.players[1] = new Player(listener.accept(), game);
-                game.players[1].start();
-            }
-        } finally {
-            listener.close();
+        Server server = new Server();
+        server.start();
+    }
+
+    void start() throws IOException {
+        while (true) {
+            Player newClient = new Player(serverSocket.accept(), this);
+            this.connectedClients.add(newClient);
+            new Thread(newClient).start();
         }
     }
+
+
+
+
 
 
 }

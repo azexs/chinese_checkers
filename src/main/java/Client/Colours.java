@@ -29,13 +29,13 @@ public final class Colours extends HashMap<Integer, Color> {
     private void initialize() {
         instance = this;
         instance.clear();
-        instance.put(0, Color.GREY);
-        instance.put(1, Color.GREEN);
-        instance.put(2, Color.RED);
-        instance.put(3, Color.BLUE);
-        instance.put(4, Color.GREEN);
-        instance.put(5, Color.WHITE);
-        instance.put(6, Color.YELLOW);
+        instance.put(6, Color.GREY);
+        instance.put(0, Color.GREEN);
+        instance.put(1, Color.RED);
+        instance.put(2, Color.BLUE);
+        instance.put(3, Color.YELLOW);
+        instance.put(4, Color.ORANGE);
+        instance.put(5, Color.VIOLET);
     }
 
 

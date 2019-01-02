@@ -1,5 +1,6 @@
 public class Game {
 
+    private int gameId;
 
     Player[] players;
     int connectedPlayers;
