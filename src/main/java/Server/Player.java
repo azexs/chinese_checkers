@@ -14,7 +14,7 @@ public class Player {
 
     public Player(int id) throws IOException {
         this.id = id;
-        this.colours = new Colours();
+        this.colours = Colours.getInstance();
         this.color = colours.get(id);
 
     }
