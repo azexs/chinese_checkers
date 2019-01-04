@@ -1,8 +1,9 @@
+package Server;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class Server {
@@ -10,7 +11,7 @@ public class Server {
 
     List<Game> games;
 
-    List<Player> connectedClients;
+    List<ClientHandler> connectedClients;
 
     ServerSocket serverSocket;
 
@@ -27,15 +28,11 @@ public class Server {
 
     void start() throws IOException {
         while (true) {
-            Player newClient = new Player(serverSocket.accept(), this);
+            ClientHandler newClient = new ClientHandler(serverSocket.accept(), this);
             this.connectedClients.add(newClient);
             new Thread(newClient).start();
         }
     }
-
-
-
-
 
 
 }

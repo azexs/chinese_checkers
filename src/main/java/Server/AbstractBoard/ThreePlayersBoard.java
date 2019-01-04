@@ -1,0 +1,83 @@
+package Server.AbstractBoard;
+
+public class ThreePlayersBoard extends BoardCore {
+
+    public void setPlayers() {
+        //sets player 1
+        board[6][0].setColor(colours.get(0)).setPawn(true);
+        board[5][1].setColor(colours.get(0)).setPawn(true);
+        board[6][1].setColor(colours.get(0)).setPawn(true);
+        board[5][2].setColor(colours.get(0)).setPawn(true);
+        board[6][2].setColor(colours.get(0)).setPawn(true);
+        board[7][2].setColor(colours.get(0)).setPawn(true);
+        board[4][3].setColor(colours.get(0)).setPawn(true);
+        board[5][3].setColor(colours.get(0)).setPawn(true);
+        board[6][3].setColor(colours.get(0)).setPawn(true);
+        board[7][3].setColor(colours.get(0)).setPawn(true);
+
+
+        //sets player 2
+        board[10][7].setColor(colours.get(6)).setPawn(false);
+        board[10][6].setColor(colours.get(6)).setPawn(false);
+        board[11][6].setColor(colours.get(6)).setPawn(false);
+        board[9][5].setColor(colours.get(6)).setPawn(false);
+        board[10][5].setColor(colours.get(6)).setPawn(false);
+        board[11][5].setColor(colours.get(6)).setPawn(false);
+        board[9][4].setColor(colours.get(6)).setPawn(false);
+        board[10][4].setColor(colours.get(6)).setPawn(false);
+        board[11][4].setColor(colours.get(6)).setPawn(false);
+        board[12][4].setColor(colours.get(6)).setPawn(false);
+
+
+        //sets player 3
+        board[10][9].setColor(colours.get(1)).setPawn(true);
+        board[10][10].setColor(colours.get(1)).setPawn(true);
+        board[11][10].setColor(colours.get(1)).setPawn(true);
+        board[9][11].setColor(colours.get(1)).setPawn(true);
+        board[10][11].setColor(colours.get(1)).setPawn(true);
+        board[11][11].setColor(colours.get(1)).setPawn(true);
+        board[9][12].setColor(colours.get(1)).setPawn(true);
+        board[10][12].setColor(colours.get(1)).setPawn(true);
+        board[11][12].setColor(colours.get(1)).setPawn(true);
+        board[12][12].setColor(colours.get(1)).setPawn(true);
+
+        //sets player 4
+        board[4][13].setColor(colours.get(6)).setPawn(false);
+        board[5][13].setColor(colours.get(6)).setPawn(false);
+        board[6][13].setColor(colours.get(6)).setPawn(false);
+        board[7][13].setColor(colours.get(6)).setPawn(false);
+        board[7][14].setColor(colours.get(6)).setPawn(false);
+        board[5][14].setColor(colours.get(6)).setPawn(false);
+        board[6][14].setColor(colours.get(6)).setPawn(false);
+        board[5][15].setColor(colours.get(6)).setPawn(false);
+        board[6][15].setColor(colours.get(6)).setPawn(false);
+        board[6][16].setColor(colours.get(6)).setPawn(false);
+
+        //sets payer 5
+        board[0][12].setColor(colours.get(2)).setPawn(true);
+        board[1][12].setColor(colours.get(2)).setPawn(true);
+        board[2][12].setColor(colours.get(2)).setPawn(true);
+        board[3][12].setColor(colours.get(2)).setPawn(true);
+        board[0][11].setColor(colours.get(2)).setPawn(true);
+        board[1][11].setColor(colours.get(2)).setPawn(true);
+        board[2][11].setColor(colours.get(2)).setPawn(true);
+        board[1][10].setColor(colours.get(2)).setPawn(true);
+        board[2][10].setColor(colours.get(2)).setPawn(true);
+        board[1][9].setColor(colours.get(2)).setPawn(true);
+
+        //sets player 6
+        board[0][4].setColor(colours.get(6)).setPawn(false);
+        board[1][4].setColor(colours.get(6)).setPawn(false);
+        board[2][4].setColor(colours.get(6)).setPawn(false);
+        board[3][4].setColor(colours.get(6)).setPawn(false);
+        board[0][5].setColor(colours.get(6)).setPawn(false);
+        board[1][5].setColor(colours.get(6)).setPawn(false);
+        board[2][5].setColor(colours.get(6)).setPawn(false);
+        board[1][6].setColor(colours.get(6)).setPawn(false);
+        board[2][6].setColor(colours.get(6)).setPawn(false);
+        board[1][7].setColor(colours.get(6)).setPawn(false);
+
+    }
+
+
+}

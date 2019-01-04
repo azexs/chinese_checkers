@@ -17,13 +17,11 @@ public class GameWindow {
     GraphicBoard board;
     Pane pane;
     Scene scene;
-    Main main;
     Label status;
     Actions actions;
 
 
     public GameWindow(Main main, int size) {
-        this.main = main;
         pane = new Pane();
         board = new GraphicBoard(size);
 
