@@ -10,12 +10,14 @@ public class Player {
     Color color;
     Colours colours;
     Sides startSide;
+    boolean win;
 
     public Player(int id, Field[][] board) {
         this.id = id;
         this.colours = Colours.getInstance();
         this.color = colours.get(id);
         this.startSide = findSide(board);
+        win = false;
     }
 
     public Sides findSide(Field[][] board) {

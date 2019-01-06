@@ -4,6 +4,7 @@ import Server.AbstractBoard.AbstractBoard;
 
 import java.util.List;
 
+
 public class Game {
 
     Player[] players;
@@ -54,6 +55,39 @@ public class Game {
 
         return true;
 
+    }
+
+    public boolean nextPlayer() {
+        int curid = 2137;
+
+        for (int i = 0; i < totalplayers; i++) {
+            if (players[i].equals(currentPlayer)) {
+                if (i == totalplayers - 1) curid = 0;
+                else curid = i + 1;
+                break;
+            }
+        }
+
+        for (int j = curid; j < totalplayers; j++) {
+
+            if (!players[j].win) {
+                currentPlayer = players[j];
+                return true;
+            }
+
+            if (j == totalplayers - 1) {
+                for (int k = 0; k < curid; k++) {
+                    if (!players[k].win) {
+                        currentPlayer = players[k];
+                        return true;
+                    }
+                }
+            }
+
+
+        }
+
+        return false;
     }
 
 

@@ -78,40 +78,24 @@ public class ClientHandler extends Thread {
 
                             sendToAllPlayers("MOVE" + " " + pawnpos1[0] + " " + pawnpos1[1] + " " + pawnpos2[0] + " " + pawnpos2[1]);
 
-                            if ((game.checkWin(game.currentPlayer))) System.out.println("You win");
+                            if ((game.checkWin(game.currentPlayer))) game.currentPlayer.win = true;
+                            //winmessage
                         }
 
                     }
 
 
                 } else if (input.startsWith("NEXTPLAYER")) {
-
                     out.println("ENDROUND");
-
-                    for (int i = 0; i < game.totalplayers; i++) {
-                        if (game.players[i].equals(game.currentPlayer)) {
-
-                            if (i == (game.totalplayers - 1)) {
-                                game.currentPlayer = game.players[0];
-                            } else {
-                                game.currentPlayer = game.players[i + 1];
-                            }
-
-                            break;
-                        }
-                    }
-
+                    if (game.nextPlayer()) {
                     Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
                     if (temp.isPresent()) {
                         temp.get().out.println("YOURTURN");
                     }
-
+                    }
                 }
-
-
             }
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             //
         }
     }

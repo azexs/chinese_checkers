@@ -12,9 +12,6 @@ public abstract class BoardCore implements Board {
     public BoardCore() {
         board = new Field[13][17];
         colours = Colours.getInstance();
-        initializeBoard();
-        setMainTriangle();
-        setZones();
 
     }
 
