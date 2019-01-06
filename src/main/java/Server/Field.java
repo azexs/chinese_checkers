@@ -9,11 +9,15 @@ public class Field {
     Sides startSide;
     Sides winSide;
 
+    int x;
+    int y;
 
-    public Field() {
+    public Field(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    ;
+
 
     public Field(Color color, Sides start, boolean isPawn) {
         this.color = color;
@@ -29,7 +33,7 @@ public class Field {
 
     public Field setStartSide(Sides side) {
         startSide = side;
-        //winSide=startSide.getOppositeSide();
+        if (startSide != null) winSide = startSide.getOppositeSide();
         return this;
     }
 

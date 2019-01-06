@@ -25,12 +25,22 @@ public class ServerConnector extends Thread {
         this.main = main;
     }
 
+    void createGame(double value) {
+        out.println("CREATEGAME" + value);
+
+    }
+
+    void joinGame(int position) {
+        out.println("JOIN" + position);
+    }
+
 
     public void run() {
         String response;
         try {
             while (true) {
                 response = in.readLine();
+                System.out.println(response);
 
 
                 if (response.startsWith("MOVE")) {

@@ -27,7 +27,7 @@ public class GameWindow {
 
         HBox hbox = new HBox(15);
         VBox vbox = new VBox();
-        hbox.setAlignment(Pos.CENTER_LEFT);
+        hbox.setAlignment(Pos.TOP_LEFT);
 
         Button endTurn = new Button("END TURN");
         status = new Label("Waiting for players");
@@ -42,7 +42,8 @@ public class GameWindow {
         actions.addListeners();
 
         vbox.getChildren().addAll(hbox, pane);
-        scene = new Scene(vbox, 13 * 40, 17 * 40);
+        vbox.setAlignment(Pos.TOP_CENTER);
+        scene = new Scene(vbox, 440, 610);
 
     }
 
@@ -53,11 +54,11 @@ public class GameWindow {
                 if (board.getPawn(x, y).getFill() == Color.GREEN) {
                     if (y % 2 == 0) {
 
-                        board.getPawn(x, y).relocate((x * 40), y * 40);
+                        board.getPawn(x, y).relocate((x * 35), y * 35);
                         pane.getChildren().addAll(board.getPawn(x, y));
                     } else {
 
-                        board.getPawn(x, y).relocate((x * 40) + 20, y * 40);
+                        board.getPawn(x, y).relocate((x * 35) + 20, y * 35);
 
 
                         pane.getChildren().addAll(board.getPawn(x, y));
@@ -65,30 +66,30 @@ public class GameWindow {
                 }
                 if (board.getPawn(x, y).getFill() == Color.RED) {
                     if (y % 2 == 0) {
-                        board.getPawn(x, y).relocate(x * 40, y * 40);
+                        board.getPawn(x, y).relocate(x * 35, y * 35);
                         pane.getChildren().addAll(board.getPawn(x, y));
                     } else {
-                        board.getPawn(x, y).relocate((x * 40) + 20, y * 40);
+                        board.getPawn(x, y).relocate((x * 35) + 20, y * 35);
                         pane.getChildren().addAll(board.getPawn(x, y));
                     }
                 }
                 if (board.getPawn(x, y).getFill() == Color.GREY) {
                     if (y % 2 == 0) {
-                        board.getPawn(x, y).relocate(x * 40, y * 40);
+                        board.getPawn(x, y).relocate(x * 35, y * 35);
                         pane.getChildren().addAll(board.getPawn(x, y));
                     } else {
-                        board.getPawn(x, y).relocate((x * 40) + 20, y * 40);
+                        board.getPawn(x, y).relocate((x * 35) + 20, y * 35);
                         pane.getChildren().addAll(board.getPawn(x, y));
                     }
                 }
                 if (board.getPawn(x, y).getFill() == Color.BLUE) {
                     if (y % 2 == 0) {
 
-                        board.getPawn(x, y).relocate((x * 40), y * 40);
+                        board.getPawn(x, y).relocate((x * 35), y * 35);
                         pane.getChildren().addAll(board.getPawn(x, y));
                     } else {
 
-                        board.getPawn(x, y).relocate((x * 40) + 20, y * 40);
+                        board.getPawn(x, y).relocate((x * 35) + 20, y * 35);
 
 
                         pane.getChildren().addAll(board.getPawn(x, y));
@@ -97,11 +98,11 @@ public class GameWindow {
                 if (board.getPawn(x, y).getFill() == Color.YELLOW) {
                     if (y % 2 == 0) {
 
-                        board.getPawn(x, y).relocate((x * 40), y * 40);
+                        board.getPawn(x, y).relocate((x * 35), y * 35);
                         pane.getChildren().addAll(board.getPawn(x, y));
                     } else {
 
-                        board.getPawn(x, y).relocate((x * 40) + 20, y * 40);
+                        board.getPawn(x, y).relocate((x * 35) + 20, y * 35);
 
 
                         pane.getChildren().addAll(board.getPawn(x, y));
@@ -110,11 +111,11 @@ public class GameWindow {
                 if (board.getPawn(x, y).getFill() == Color.ORANGE) {
                     if (y % 2 == 0) {
 
-                        board.getPawn(x, y).relocate((x * 40), y * 40);
+                        board.getPawn(x, y).relocate((x * 35), y * 35);
                         pane.getChildren().addAll(board.getPawn(x, y));
                     } else {
 
-                        board.getPawn(x, y).relocate((x * 40) + 20, y * 40);
+                        board.getPawn(x, y).relocate((x * 35) + 20, y * 35);
 
 
                         pane.getChildren().addAll(board.getPawn(x, y));
@@ -123,11 +124,11 @@ public class GameWindow {
                 if (board.getPawn(x, y).getFill() == Color.VIOLET) {
                     if (y % 2 == 0) {
 
-                        board.getPawn(x, y).relocate((x * 40), y * 40);
+                        board.getPawn(x, y).relocate((x * 35), y * 35);
                         pane.getChildren().addAll(board.getPawn(x, y));
                     } else {
 
-                        board.getPawn(x, y).relocate((x * 40) + 20, y * 40);
+                        board.getPawn(x, y).relocate((x * 35) + 20, y * 35);
 
 
                         pane.getChildren().addAll(board.getPawn(x, y));

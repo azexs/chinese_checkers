@@ -5,6 +5,7 @@ import Server.Field;
 import Server.Sides;
 
 public abstract class BoardCore implements Board {
+
     public Field[][] board;
     Colours colours;
 
@@ -20,14 +21,14 @@ public abstract class BoardCore implements Board {
     public void initializeBoard() {
         for (int x = 0; x < 13; x++) {
             for (int y = 0; y < 17; y++) {
-                board[x][y] = new Field();
+                board[x][y] = new Field(x, y);
             }
         }
     }
 
     public void setMainTriangle() {
 
-        board[4][4].setColor(colours.get(6)).setPawn(false).setStartSide(null);
+        board[4][4].setColor(colours.get(6)).setStartSide(null).setPawn(false);
         board[5][4].setColor(colours.get(6)).setStartSide(null).setPawn(false);
         board[6][4].setColor(colours.get(6)).setStartSide(null).setPawn(false);
         board[7][4].setColor(colours.get(6)).setStartSide(null).setPawn(false);

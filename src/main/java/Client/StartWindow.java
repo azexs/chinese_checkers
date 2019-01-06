@@ -42,9 +42,7 @@ public class StartWindow {
         joinGame.relocate(400, 200);
 
         joinGame.setOnAction(event -> {
-            main.connector.out.println("JOIN" + position);
-
-
+            main.connector.joinGame(position);
         });
 
         newGame.setOnAction(event -> {
@@ -61,7 +59,7 @@ public class StartWindow {
             slider1.setMinorTickCount(0);
             slider1.setBlockIncrement(1);
             slider1.setSnapToTicks(true);
-            slider1.setOnMouseClicked(event1 -> System.out.println(slider1.getValue()));
+
 
             Label label2 = new Label("Liczba botów");
             Slider slider2 = new Slider(0, 5, 0);
@@ -71,13 +69,13 @@ public class StartWindow {
             slider2.setMinorTickCount(0);
             slider2.setBlockIncrement(1);
             slider2.setSnapToTicks(true);
-            slider2.setOnMouseClicked(event2 -> System.out.println(slider2.getValue()));
+
 
             Button button = new Button("Create Game");
 
             button.setOnMouseClicked(e -> {
 
-                main.connector.out.println("CREATEGAME" + slider1.getValue());
+                main.connector.createGame(slider1.getValue());
                 stage1.close();
 
             });

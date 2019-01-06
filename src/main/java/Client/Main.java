@@ -35,6 +35,7 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         Scene scene = new Scene(startWindow.getView(), 550, 350);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
         new Thread(connector).start();
     }

@@ -50,7 +50,7 @@ public class ClientHandler extends Thread {
                 } else if (input.startsWith("JOIN")) {
                     input = input.substring(4);
                     game = server.games.get(Integer.parseInt(input));
-                    player = new Player(game.connectedPlayers);
+                    player = new Player(game.connectedPlayers, game.board.getBoard());
                     game.players[game.connectedPlayers] = player;
                     game.connectedPlayers++;
 
@@ -71,12 +71,16 @@ public class ClientHandler extends Thread {
                         String[] pawnpos2 = separated[2].split("\\.");
                         int pawnX = Integer.parseInt(pawnpos1[0]);
                         int pawnY = Integer.parseInt(pawnpos1[1]);
-                        int targetX = Integer.parseInt(pawnpos1[0]);
-                        int targetY = Integer.parseInt(pawnpos1[1]);
+                        int targetX = Integer.parseInt(pawnpos2[0]);
+                        int targetY = Integer.parseInt(pawnpos2[1]);
 
-                        game.move(pawnX, pawnY, targetX, targetY);
+                        if (game.validMove(pawnX, pawnY, targetX, targetY)) {
 
-                        sendToAllPlayers("MOVE" + " " + pawnpos1[0] + " " + pawnpos1[1] + " " + pawnpos2[0] + " " + pawnpos2[1]);
+                            sendToAllPlayers("MOVE" + " " + pawnpos1[0] + " " + pawnpos1[1] + " " + pawnpos2[0] + " " + pawnpos2[1]);
+
+                            if ((game.checkWin(game.currentPlayer))) System.out.println("You win");
+                        }
+
                     }
 
 

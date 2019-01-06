@@ -2,6 +2,8 @@ package Server;
 
 import Server.AbstractBoard.AbstractBoard;
 
+import java.util.List;
+
 public class Game {
 
     Player[] players;
@@ -9,6 +11,7 @@ public class Game {
     int totalplayers;
     AbstractBoard board;
     Rules rules;
+    Field[][] boardd;
 
     Player currentPlayer;
 
@@ -17,22 +20,39 @@ public class Game {
         totalplayers = players;
         connectedPlayers = 0;
         board = new AbstractBoard(players);
+        rules = new Rules(board, this);
+        boardd = board.getBoard();
     }
 
 
-    public void move(int pawnx, int pawny, int targetx, int targety) {
+    public boolean validMove(int pawnx, int pawny, int targetx, int targety) {
 
-        Field pawn = board.getPawn(pawnx, pawny);
-        Field target = board.getPawn(targetx, targety);
+        Field pawn = boardd[pawnx][pawny];
+        Field target = boardd[targetx][targety];
+        List<Field> fields = currentPlayer.startSide.getOppositeSide().getArea(board);
 
+        //Check if pawn is pawn and target is empty field, then check if 'main'  pawn is in opposite side, if so, target must be in oppostie side
 
-        rules.move(pawn, target);
+        if ((pawn.isPawn || !target.isPawn) && (!fields.contains(pawn) || fields.contains(target))) {
+            if (!rules.trymove(pawnx, pawny, targetx, targety)) {
+                return false;
+            }
+        } else
+            return false;
 
+        return true;
     }
 
 
-    public void checkWin(Player p) {
+    public boolean checkWin(Player p) {
+        Sides playerSide = p.startSide;
+        Sides winSide = playerSide.getOppositeSide();
 
+        for (Field f : winSide.getArea(board)) {
+            if (f.winSide != winSide) return false;
+        }
+
+        return true;
 
     }
 
