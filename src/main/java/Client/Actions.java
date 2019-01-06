@@ -33,7 +33,7 @@ public class Actions {
                     }
 
                     if (selectedPawn != null) {
-                        if (pos.getFill() == main.client.color) {
+                        if (pos.getFill() == main.client.getColor()) {
                             selectedPawn.setStrokeWidth(0);
                             selectedPawn = pos;
                             selectedPawn.setStroke(Color.BLACK);
@@ -46,7 +46,7 @@ public class Actions {
                             selectedPawn = null;
                         }
                     } else {
-                        if (pos.getFill() == main.client.color) {
+                        if (pos.getFill() == main.client.getColor()) {
                             selectedPawn = pos;
                             selectedPawn.setStroke(Color.BLACK);
                             selectedPawn.setStrokeWidth(4);
@@ -61,9 +61,7 @@ public class Actions {
 
 
         endTurn.setOnAction(e -> {
-            if (main.client.isPlayerRound) {
-                main.connector.out.println("NEXTPLAYER");
-            }
+            main.connector.out.println("NEXTPLAYER");
         });
 
 

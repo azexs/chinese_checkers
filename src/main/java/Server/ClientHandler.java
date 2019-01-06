@@ -91,18 +91,20 @@ public class ClientHandler extends Thread {
                     }
 
                 } else if (input.startsWith("NEXTPLAYER")) {
-                    out.println("ENDROUND");
+                    if (this.player == game.currentPlayer) {
+                        out.println("ENDROUND");
 
-                    if ((game.checkWin(game.currentPlayer))) {
-                        game.currentPlayer.win = true;
-                        Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
-                        temp.ifPresent(clientHandler -> clientHandler.out.println("YOUWIN"));
+                        if ((game.checkWin(game.currentPlayer))) {
+                            game.currentPlayer.win = true;
+                            Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
+                            temp.ifPresent(clientHandler -> clientHandler.out.println("YOUWIN"));
 
-                    }
+                        }
 
-                    if (game.nextPlayer()) {
-                        Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
-                        temp.ifPresent(clientHandler -> clientHandler.out.println("YOURTURN"));
+                        if (game.nextPlayer()) {
+                            Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
+                            temp.ifPresent(clientHandler -> clientHandler.out.println("YOURTURN"));
+                        }
                     }
                 }
             }

@@ -7,21 +7,22 @@ import java.util.List;
 
 public class Game {
 
-    Player[] players;
     int connectedPlayers;
     int totalplayers;
-    AbstractBoard board;
-    Rules rules;
-    Field[][] boardd;
-
+    Player[] players;
     Player currentPlayer;
+    AbstractBoard board;
+    Field[][] boardd;
+    Rules rules;
+
+
 
     public Game(int players) {
         this.players = new Player[players];
         totalplayers = players;
         connectedPlayers = 0;
         board = new AbstractBoard(players);
-        rules = new Rules(board, this);
+        rules = new Rules(this);
         boardd = board.getBoard();
     }
 

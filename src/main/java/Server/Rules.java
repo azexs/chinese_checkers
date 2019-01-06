@@ -1,7 +1,5 @@
 package Server;
 
-import Server.AbstractBoard.AbstractBoard;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +8,7 @@ public class Rules {
     List<Field> possibleMoves;
     Game game;
 
-    public Rules(AbstractBoard board, Game game) {
+    public Rules(Game game) {
         this.game = game;
         possibleMoves = new ArrayList<Field>();
     }
@@ -215,7 +213,6 @@ public class Rules {
                 }
             }
         }
-
 
         return possibleMoves;
     }

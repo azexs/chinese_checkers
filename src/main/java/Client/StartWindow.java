@@ -75,7 +75,7 @@ public class StartWindow {
 
             button.setOnMouseClicked(e -> {
 
-                main.connector.createGame(slider1.getValue());
+                if (slider1.getValue() != 1 && slider1.getValue() != 5) main.connector.createGame(slider1.getValue());
                 stage1.close();
 
             });
@@ -110,10 +110,3 @@ public class StartWindow {
 
 
 }
-
-
-
-
-
-
-

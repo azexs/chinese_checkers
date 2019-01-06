@@ -15,7 +15,6 @@ public final class Colours extends HashMap<Integer, Color> {
     }
 
     public static Colours getInstance() {
-        //Double-checked locking
         if (instance == null) {
             synchronized (Colours.class) {
                 if (instance == null) {

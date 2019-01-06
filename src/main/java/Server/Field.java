@@ -18,14 +18,6 @@ public class Field {
     }
 
 
-
-    public Field(Color color, Sides start, boolean isPawn) {
-        this.color = color;
-        startSide = start;
-        this.isPawn = isPawn;
-        winSide = startSide.getOppositeSide();
-    }
-
     public Field setPawn(boolean is) {
         isPawn = is;
         return this;

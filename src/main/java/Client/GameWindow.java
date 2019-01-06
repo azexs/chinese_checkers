@@ -31,7 +31,7 @@ public class GameWindow {
 
         Button endTurn = new Button("END TURN");
         status = new Label("Waiting for players");
-        Label label = new Label("\t\t\t\t\t\tYou are");
+        Label label = new Label("\t\t\t\t\tYou are");
         Circle circle = new Circle(7);
         circle.setFill(main.client.color);
         hbox.getChildren().addAll(endTurn, status, label, circle);

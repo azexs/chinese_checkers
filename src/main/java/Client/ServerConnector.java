@@ -59,17 +59,15 @@ public class ServerConnector extends Thread {
                     main.gameWindow.board.getPawn(par21, par22).setFill(temPawn.getFill());
                     temPawn.setFill(Color.GREY);
 
-                    if (main.client.isPlayerRound) out.println("NEXTPLAYER");
+                    out.println("NEXTPLAYER");
 
 
                 } else if (response.startsWith("YOURTURN")) {
-                    main.client.isPlayerRound = true;
 
                     Platform.runLater(() -> main.gameWindow.status.setText("Your Turn"));
 
-
                 } else if (response.startsWith("ENDROUND")) {
-                    main.client.isPlayerRound = false;
+
                     Platform.runLater(() -> main.gameWindow.status.setText("Opponent Turn"));
 
                 } else if (response.startsWith("START")) {
@@ -81,7 +79,7 @@ public class ServerConnector extends Thread {
                     Platform.runLater(() -> main.startWindow.list.getItems().add("Game " + q));
 
                 } else if (response.startsWith("JOINED")) {
-                    main.client.color = main.colours.get(Integer.parseInt(response.substring(6, 7)));
+                    main.client.setColor(main.colours.get(Integer.parseInt(response.substring(6, 7))));
                     int size = Integer.parseInt(response.substring(7));
                     Platform.runLater(() -> {
                         GameWindow asd = new GameWindow(main, size);

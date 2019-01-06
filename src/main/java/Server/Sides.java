@@ -153,4 +153,3 @@ public enum Sides {
     public abstract List<Field> getArea(AbstractBoard board);
 
 }
-
