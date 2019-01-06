@@ -22,10 +22,6 @@ public class Rules {
 
             Field temp = game.boardd[pawnx][pawny];
 
-
-            Field temp2 = game.boardd[targetx][targety];
-
-
             game.boardd[pawnx][pawny] = game.boardd[targetx][targety];
             game.boardd[pawnx][pawny].x = pawny;
             game.boardd[pawnx][pawny].y = pawny;
@@ -50,7 +46,8 @@ public class Rules {
 
         possibleMoves = possibleSingleMoves(pawnx, pawny, 1);
         if (move(pawnx, pawny, targetx, targety)) return true;
-        possibleJumps(pawnx, pawny);
+        possibleMoves = possibleJumps(pawnx, pawny);
+
         for (Field f : possibleMoves) {
             System.out.println("possible: " + f.x + " " + f.y);
         }
@@ -105,7 +102,7 @@ public class Rules {
     }
 
 
-    void possibleJumps(int pawnx, int pawny) {
+    List<Field> possibleJumps(int pawnx, int pawny) {
 
         List<Field> occupiedfields = possibleSingleMoves(pawnx, pawny, 0);
 
@@ -118,18 +115,52 @@ public class Rules {
             if (pawny == f.y) {
                 if ((pawnx - f.x) < 0) {
                     if (!(game.boardd[pawnx + 2][pawny].isPawn)) {
-                        possibleMoves.add(game.boardd[pawnx + 2][pawny]);
+                        if (!possibleMoves.contains(game.boardd[pawnx + 2][pawny])) {
+                            possibleMoves.add(game.boardd[pawnx + 2][pawny]);
+                            possibleJumps(pawnx + 2, pawny);
+                        }
                     }
                 } else {
                     if (!(game.boardd[pawnx - 2][pawny].isPawn)) {
-                        possibleMoves.add(game.boardd[pawnx - 2][pawny]);
+                        if (!possibleMoves.contains(game.boardd[pawnx + 2][pawny])) {
+                            possibleMoves.add(game.boardd[pawnx - 2][pawny]);
+                            possibleJumps(pawnx - 2, pawny);
+                        }
                     }
                 }
             }
 
+
+            if (pawny - f.y == -1) {
+
+                if (pawnx - f.x == 1) {
+                    if (!(game.boardd[pawnx - 1][pawny + 2].isPawn)) {
+                        if (!possibleMoves.contains(game.boardd[pawnx - 1][pawny + 2])) {
+                            possibleMoves.add(game.boardd[pawnx - 1][pawny + 2]);
+                            possibleJumps(pawnx - 1, pawny + 2);
+                        }
+                    }
+                }
+
+                if (pawnx == f.x) {
+                    if (!(game.boardd[pawnx + 1][pawny + 2].isPawn)) {
+                        if (!possibleMoves.contains(game.boardd[pawnx + 1][pawny + 2])) {
+                            possibleMoves.add(game.boardd[pawnx + 1][pawny + 2]);
+                            possibleJumps(pawnx + 1, pawny + 2);
+                        }
+                    }
+                }
+
+            }
+
+
+
+
+
+
         }
 
-
+        return possibleMoves;
     }
 
 
