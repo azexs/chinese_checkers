@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Optional;
 
 public class ClientHandler extends Thread {
@@ -25,12 +26,19 @@ public class ClientHandler extends Thread {
         out = new PrintWriter(socket.getOutputStream(), true);
     }
 
+    private void sendToAllPlayersInGame(String msg) {
+
+        for (ClientHandler p : server.connectedClients) {
+            if (Arrays.asList(game.players).contains(p.player)) p.out.println(msg);
+        }
+
+    }
+
     private void sendToAllPlayers(String msg) {
 
         for (ClientHandler p : server.connectedClients) {
             p.out.println(msg);
         }
-
     }
 
     public void run() {
@@ -58,7 +66,7 @@ public class ClientHandler extends Thread {
 
                     if (game.connectedPlayers == game.totalplayers) {
                         game.currentPlayer = game.players[0];
-                        sendToAllPlayers("START");
+                        sendToAllPlayersInGame("START");
                         Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
                         if (temp.isPresent()) {
                             temp.get().out.println("YOURTURN");
@@ -76,27 +84,30 @@ public class ClientHandler extends Thread {
 
                         if (game.validMove(pawnX, pawnY, targetX, targetY)) {
 
-                            sendToAllPlayers("MOVE" + " " + pawnpos1[0] + " " + pawnpos1[1] + " " + pawnpos2[0] + " " + pawnpos2[1]);
+                            sendToAllPlayersInGame("MOVE" + " " + pawnpos1[0] + " " + pawnpos1[1] + " " + pawnpos2[0] + " " + pawnpos2[1]);
 
-                            if ((game.checkWin(game.currentPlayer))) game.currentPlayer.win = true;
-                            //winmessage
                         }
 
                     }
 
-
                 } else if (input.startsWith("NEXTPLAYER")) {
                     out.println("ENDROUND");
-                    if (game.nextPlayer()) {
-                        Optional<ClientHandler> tempe = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
-                        if (tempe.isPresent()) {
-                            tempe.get().out.println("YOURTURN");
+
+                    if ((game.checkWin(game.currentPlayer))) {
+                        game.currentPlayer.win = true;
+                        Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
+                        temp.ifPresent(clientHandler -> clientHandler.out.println("YOUWIN"));
+
                     }
+
+                    if (game.nextPlayer()) {
+                        Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
+                        temp.ifPresent(clientHandler -> clientHandler.out.println("YOURTURN"));
                     }
                 }
             }
         } catch (Exception e) {
-            //
+            e.printStackTrace();
         }
     }
 

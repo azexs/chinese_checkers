@@ -65,29 +65,20 @@ public class ServerConnector extends Thread {
                 } else if (response.startsWith("YOURTURN")) {
                     main.client.isPlayerRound = true;
 
-                    Platform.runLater(() -> {
-                        main.gameWindow.status.setText("Your Turn");
-                    });
+                    Platform.runLater(() -> main.gameWindow.status.setText("Your Turn"));
 
 
                 } else if (response.startsWith("ENDROUND")) {
                     main.client.isPlayerRound = false;
-                    Platform.runLater(() -> {
-                        main.gameWindow.status.setText("Opponent Turn");
-                    });
+                    Platform.runLater(() -> main.gameWindow.status.setText("Opponent Turn"));
 
                 } else if (response.startsWith("START")) {
-                    Platform.runLater(() -> {
-                        main.gameWindow.status.setText("Opponent Turn");
-                    });
+                    Platform.runLater(() -> main.gameWindow.status.setText("Opponent Turn"));
 
                 } else if (response.startsWith("CREATED")) {
                     int q = main.startWindow.list.getItems().size() + 1;
 
-                    Platform.runLater(() -> {
-                        main.startWindow.list.getItems().add("Game " + q);
-
-                    });
+                    Platform.runLater(() -> main.startWindow.list.getItems().add("Game " + q));
 
                 } else if (response.startsWith("JOINED")) {
                     main.client.color = main.colours.get(Integer.parseInt(response.substring(6, 7)));
@@ -99,12 +90,11 @@ public class ServerConnector extends Thread {
 
                     });
 
-                } else if (response.startsWith("QUIT")) {
-                    break;
+                } else if (response.startsWith("YOUWIN")) {
+                    Platform.runLater(() -> main.gameWindow.status.setText("You win!"));
                 }
             }
-            out.println("QUIT");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

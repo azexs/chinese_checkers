@@ -50,10 +50,10 @@ public class Game {
         Sides winSide = playerSide.getOppositeSide();
 
         for (Field f : winSide.getArea(board)) {
-            if (f.winSide != winSide) return false;
+            if (f.winSide == winSide) return true;
         }
 
-        return true;
+        return false;
 
     }
 
