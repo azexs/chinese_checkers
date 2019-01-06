@@ -4,23 +4,23 @@ package Client;
 import javafx.event.EventTarget;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
-public class Actions {
 
-    Main main;
-    Pawn selectedPawn;
-    EventTarget target;
-    Pawn[][] board;
-    Button endTurn;
+class Actions {
 
-    public Actions(Pawn[][] board, Main main, Button endTurn) {
+    private Main main;
+    private Pawn selectedPawn;
+    private EventTarget target;
+    private Pawn[][] board;
+    private Button endTurn;
+
+    Actions(Pawn[][] board, Main main, Button endTurn) {
         this.board = board;
         this.main = main;
         this.endTurn = endTurn;
     }
 
-    public void addListeners() {
+    void addListeners() {
 
         for (int i = 0; i < board.length; i++) {
             for (int y = 0; y < board[i].length; y++) {
@@ -33,6 +33,7 @@ public class Actions {
                     }
 
                     if (selectedPawn != null) {
+                        assert pos != null;
                         if (pos.getFill() == main.client.getColor()) {
                             selectedPawn.setStrokeWidth(0);
                             selectedPawn = pos;
@@ -46,6 +47,7 @@ public class Actions {
                             selectedPawn = null;
                         }
                     } else {
+                        assert pos != null;
                         if (pos.getFill() == main.client.getColor()) {
                             selectedPawn = pos;
                             selectedPawn.setStroke(Color.BLACK);
@@ -60,15 +62,13 @@ public class Actions {
         }
 
 
-        endTurn.setOnAction(e -> {
-            main.connector.out.println("NEXTPLAYER");
-        });
+        endTurn.setOnAction(e -> main.connector.out.println("NEXTPLAYER"));
 
 
     }
 
 
-    String getPos(Circle pawn) {
+    private String getPos(Pawn pawn) {
         String str = null;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {

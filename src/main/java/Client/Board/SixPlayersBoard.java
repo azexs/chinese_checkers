@@ -3,11 +3,6 @@ package Client.Board;
 
 public class SixPlayersBoard extends BoardBuilder {
 
-    public SixPlayersBoard() {
-        setPlayers();
-    }
-
-
     public void setPlayers() {
         //sets player 1
         board[6][0].setFill(colours.get(0));

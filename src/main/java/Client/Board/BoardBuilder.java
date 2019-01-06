@@ -5,14 +5,11 @@ import Client.Pawn;
 
 abstract class BoardBuilder implements Board {
     public Pawn[][] board;
-    Colours colours;
+    public Colours colours;
 
-    public BoardBuilder() {
+    BoardBuilder() {
         board = new Pawn[13][17];
         colours = Colours.getInstance();
-        initializeBoard();
-        setMainTriangle();
-
     }
 
     public void initializeBoard() {
