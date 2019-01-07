@@ -25,8 +25,8 @@ public class ServerConnector extends Thread {
         this.main = main;
     }
 
-    void createGame(double value) {
-        out.println("CREATEGAME" + value);
+    void createGame(double value, double bots) {
+        out.println("CREATEGAME" + value + "" + bots);
 
     }
 
@@ -57,10 +57,8 @@ public class ServerConnector extends Thread {
                     Pawn temPawn = main.gameWindow.board.getPawn(par11, par12);
 
                     main.gameWindow.board.getPawn(par21, par22).setFill(temPawn.getFill());
+                    if (temPawn.getFill() == main.client.getColor()) out.println("NEXTPLAYER");
                     temPawn.setFill(Color.GREY);
-
-                    out.println("NEXTPLAYER");
-
 
                 } else if (response.startsWith("YOURTURN")) {
 
@@ -72,6 +70,7 @@ public class ServerConnector extends Thread {
 
                 } else if (response.startsWith("START")) {
                     Platform.runLater(() -> main.gameWindow.status.setText("Opponent Turn"));
+                    Thread.sleep(1000);
 
                 } else if (response.startsWith("CREATED")) {
                     int q = main.startWindow.list.getItems().size() + 1;

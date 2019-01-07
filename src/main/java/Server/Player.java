@@ -11,6 +11,8 @@ public class Player {
     Colours colours;
     Sides startSide;
     boolean win;
+    boolean isBot;
+
 
     public Player(int id, Field[][] board) {
         this.id = id;
@@ -18,6 +20,8 @@ public class Player {
         this.color = colours.get(id);
         this.startSide = findSide(board);
         win = false;
+        isBot = false;
+
     }
 
     public Sides findSide(Field[][] board) {

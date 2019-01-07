@@ -9,21 +9,41 @@ public class Game {
 
     int connectedPlayers;
     int totalplayers;
+    int bots;
     Player[] players;
     Player currentPlayer;
+
     AbstractBoard board;
     Field[][] boardd;
+
     Rules rules;
+    Bot botMovement;
 
 
-
-    public Game(int players) {
+    public Game(int players, int bots) {
         this.players = new Player[players];
         totalplayers = players;
         connectedPlayers = 0;
         board = new AbstractBoard(players);
         rules = new Rules(this);
         boardd = board.getBoard();
+        this.bots = bots;
+        if (bots > 0) botMovement = new Bot(this);
+
+        addBots(bots);
+    }
+
+    void addBots(int bots) {
+        for (int i = 0; i < bots; i++) {
+            Player player = new Player(connectedPlayers, board.getBoard());
+            player.isBot = true;
+            players[connectedPlayers] = player;
+            connectedPlayers++;
+        }
+    }
+
+    void playBot(ClientHandler gameConnector) {
+        botMovement.playRound(gameConnector);
     }
 
 
@@ -35,14 +55,25 @@ public class Game {
 
         //Check if pawn is pawn and target is empty field, then check if 'main'  pawn is in opposite side, if so, target must be in oppostie side
 
-        if ((pawn.isPawn || !target.isPawn) && (!fields.contains(pawn) || fields.contains(target))) {
-            if (!rules.trymove(pawnx, pawny, targetx, targety)) {
-                return false;
+        if ((pawn.isPawn == 1 || (target.isPawn == 0)) && (!fields.contains(pawn) || fields.contains(target))) {
+            if (rules.trymove(pawnx, pawny, targetx, targety)) {
+                return true;
             }
-        } else
-            return false;
+        }
 
-        return true;
+        return false;
+    }
+
+    public void move(int pawnx, int pawny, int targetx, int targety) {
+        Field temp = boardd[pawnx][pawny];
+
+        boardd[pawnx][pawny] = boardd[targetx][targety];
+        boardd[pawnx][pawny].x = pawnx;
+        boardd[pawnx][pawny].y = pawny;
+
+        boardd[targetx][targety] = temp;
+        boardd[targetx][targety].x = targetx;
+        boardd[targetx][targety].y = targety;
     }
 
 
@@ -51,10 +82,10 @@ public class Game {
         Sides winSide = playerSide.getOppositeSide();
 
         for (Field f : winSide.getArea(board)) {
-            if (f.winSide == winSide) return true;
+            if (f.winSide != winSide) return false;
         }
 
-        return false;
+        return true;
 
     }
 

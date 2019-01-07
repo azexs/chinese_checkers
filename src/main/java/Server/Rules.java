@@ -14,20 +14,9 @@ public class Rules {
     }
 
 
-    boolean move(int pawnx, int pawny, int targetx, int targety) {
+    boolean validMove(int targetx, int targety) {
         Field target = game.boardd[targetx][targety];
         if (possibleMoves.contains(target)) {
-
-            Field temp = game.boardd[pawnx][pawny];
-
-            game.boardd[pawnx][pawny] = game.boardd[targetx][targety];
-            game.boardd[pawnx][pawny].x = pawnx;
-            game.boardd[pawnx][pawny].y = pawny;
-
-            game.boardd[targetx][targety] = temp;
-            game.boardd[targetx][targety].x = targetx;
-            game.boardd[targetx][targety].y = targety;
-
             possibleMoves.clear();
             return true;
         }
@@ -38,10 +27,10 @@ public class Rules {
     public boolean trymove(int pawnx, int pawny, int targetx, int targety) {
 
         possibleMoves = possibleSingleMoves(pawnx, pawny, 1);
-        if (move(pawnx, pawny, targetx, targety)) return true;
+        if (validMove(targetx, targety)) return true;
 
         possibleMoves = possibleJumps(pawnx, pawny);
-        if (move(pawnx, pawny, targetx, targety)) return true;
+        if (validMove(targetx, targety)) return true;
 
         return false;
     }
@@ -50,8 +39,10 @@ public class Rules {
 
         List<Field> fields = new ArrayList<Field>();
 
-        boolean lol = true;
-        if (isPawn == 1) lol = false;
+        int lol = 1;
+        if (isPawn == 1) lol = 0;
+
+
 
         if (pawny % 2 == 0) {
             for (int i = -1; i < 2; i++) {
@@ -99,7 +90,7 @@ public class Rules {
             if (pawny == f.y) {
                 if ((pawnx - f.x) < 0) {
                     if (0 <= pawnx + 2 && pawnx + 2 < 13 && pawny >= 0 && pawny < 17) {
-                        if (!(game.boardd[pawnx + 2][pawny].isPawn)) {
+                        if ((game.boardd[pawnx + 2][pawny].isPawn == 0)) {
                             if (!possibleMoves.contains(game.boardd[pawnx + 2][pawny])) {
                                 possibleMoves.add(game.boardd[pawnx + 2][pawny]);
                                 possibleJumps(pawnx + 2, pawny);
@@ -107,8 +98,8 @@ public class Rules {
                         }
                     }
                 } else {
-                    if (0 <= pawnx - 2 && pawnx - 2 < 13 && pawny >= 0 && pawny < 17) {
-                        if (!(game.boardd[pawnx - 2][pawny].isPawn)) {
+                    if (0 <= pawnx - 2 && pawnx + 2 < 13 && pawny >= 0 && pawny < 17) {
+                        if ((game.boardd[pawnx - 2][pawny].isPawn == 0)) {
                             if (!possibleMoves.contains(game.boardd[pawnx + 2][pawny])) {
                                 possibleMoves.add(game.boardd[pawnx - 2][pawny]);
                                 possibleJumps(pawnx - 2, pawny);
@@ -123,7 +114,7 @@ public class Rules {
 
                 if (pawnx - f.x == 1) {
                     if (0 <= pawnx - 1 && pawnx - 1 < 13 && pawny + 2 >= 0 && pawny + 2 < 17) {
-                        if (!(game.boardd[pawnx - 1][pawny + 2].isPawn)) {
+                        if ((game.boardd[pawnx - 1][pawny + 2].isPawn == 0)) {
                             if (!possibleMoves.contains(game.boardd[pawnx - 1][pawny + 2])) {
                                 possibleMoves.add(game.boardd[pawnx - 1][pawny + 2]);
                                 possibleJumps(pawnx - 1, pawny + 2);
@@ -134,7 +125,7 @@ public class Rules {
 
                 if (pawnx - f.x == -1) {
                     if (0 <= pawnx + 1 && pawnx + 1 < 13 && pawny + 2 >= 0 && pawny + 2 < 17) {
-                        if (!(game.boardd[pawnx + 1][pawny + 2].isPawn)) {
+                        if ((game.boardd[pawnx + 1][pawny + 2].isPawn == 0)) {
                             if (!possibleMoves.contains(game.boardd[pawnx + 1][pawny + 2])) {
                                 possibleMoves.add(game.boardd[pawnx + 1][pawny + 2]);
                                 possibleJumps(pawnx + 1, pawny + 2);
@@ -145,8 +136,8 @@ public class Rules {
 
                 if (pawnx == f.x) {
                     if (pawny % 2 == 0) {
-                        if (pawnx + 1 <= 13 && pawny + 2 < 17) {
-                            if (!(game.boardd[pawnx + 1][pawny + 2].isPawn)) {
+                        if (pawnx + 1 < 13 && pawny + 2 < 17) {
+                            if ((game.boardd[pawnx + 1][pawny + 2].isPawn == 0)) {
                                 if (!possibleMoves.contains(game.boardd[pawnx + 1][pawny + 2])) {
                                     possibleMoves.add(game.boardd[pawnx + 1][pawny + 2]);
                                     possibleJumps(pawnx + 1, pawny + 2);
@@ -154,7 +145,7 @@ public class Rules {
                             }
                         }
                     } else if (pawnx - 1 >= 0 && pawnx - 1 <= 13 && pawny + 2 < 17) {
-                        if (!(game.boardd[pawnx - 1][pawny + 2].isPawn)) {
+                        if ((game.boardd[pawnx - 1][pawny + 2].isPawn == 0)) {
                             if (!possibleMoves.contains(game.boardd[pawnx - 1][pawny + 2])) {
                                 possibleMoves.add(game.boardd[pawnx - 1][pawny + 2]);
                                 possibleJumps(pawnx - 1, pawny + 2);
@@ -170,7 +161,7 @@ public class Rules {
 
                 if (pawnx - f.x == 1) {
                     if (0 <= pawnx - 1 && pawnx - 1 < 13 && pawny - 2 >= 0 && pawny - 2 < 17) {
-                        if (!(game.boardd[pawnx - 1][pawny - 2].isPawn)) {
+                        if ((game.boardd[pawnx - 1][pawny - 2].isPawn == 0)) {
                             if (!possibleMoves.contains(game.boardd[pawnx - 1][pawny - 2])) {
                                 possibleMoves.add(game.boardd[pawnx - 1][pawny - 2]);
                                 possibleJumps(pawnx - 1, pawny - 2);
@@ -181,7 +172,7 @@ public class Rules {
 
                 if (pawnx - f.x == -1) {
                     if (0 <= pawnx + 1 && pawnx + 1 < 13 && pawny - 2 >= 0 && pawny - 2 < 17) {
-                        if (!(game.boardd[pawnx + 1][pawny - 2].isPawn)) {
+                        if ((game.boardd[pawnx + 1][pawny - 2].isPawn == 0)) {
                             if (!possibleMoves.contains(game.boardd[pawnx + 1][pawny - 2])) {
                                 possibleMoves.add(game.boardd[pawnx + 1][pawny - 2]);
                                 possibleJumps(pawnx + 1, pawny - 2);
@@ -195,7 +186,7 @@ public class Rules {
                     if (pawny % 2 == 0) {
 
                         if (0 <= pawnx + 1 && pawnx + 1 < 13 && pawny - 2 >= 0 && pawny - 2 < 17) {
-                            if (!(game.boardd[pawnx + 1][pawny - 2].isPawn)) {
+                            if ((game.boardd[pawnx + 1][pawny - 2].isPawn == 0)) {
                                 if (!possibleMoves.contains(game.boardd[pawnx + 1][pawny - 2])) {
                                     possibleMoves.add(game.boardd[pawnx + 1][pawny - 2]);
                                     possibleJumps(pawnx + 1, pawny - 2);
@@ -203,7 +194,7 @@ public class Rules {
                             }
                         }
                     } else if (0 <= pawnx - 1 && pawnx - 1 < 13 && pawny - 2 >= 0 && pawny - 2 < 17) {
-                        if (!(game.boardd[pawnx - 1][pawny - 2].isPawn)) {
+                        if ((game.boardd[pawnx - 1][pawny - 2].isPawn == 0)) {
                             if (!possibleMoves.contains(game.boardd[pawnx - 1][pawny - 2])) {
                                 possibleMoves.add(game.boardd[pawnx - 1][pawny - 2]);
                                 possibleJumps(pawnx - 1, pawny - 2);

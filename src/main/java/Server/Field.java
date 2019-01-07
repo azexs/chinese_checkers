@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 public class Field {
 
-    boolean isPawn;
+    int isPawn;
     Color color;
     Sides startSide;
     Sides winSide;
@@ -12,14 +12,15 @@ public class Field {
     int x;
     int y;
 
-    public Field(int x, int y) {
+    public Field(int x, int y, int type) {
         this.x = x;
         this.y = y;
+        isPawn = type;
     }
 
 
-    public Field setPawn(boolean is) {
-        isPawn = is;
+    public Field setPawn(int i) {
+        isPawn = i;
         return this;
     }
 

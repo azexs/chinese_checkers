@@ -26,7 +26,7 @@ public class ClientHandler extends Thread {
         out = new PrintWriter(socket.getOutputStream(), true);
     }
 
-    private void sendToAllPlayersInGame(String msg) {
+    public void sendToAllPlayersInGame(String msg) {
 
         for (ClientHandler p : server.connectedClients) {
             if (Arrays.asList(game.players).contains(p.player)) p.out.println(msg);
@@ -51,8 +51,8 @@ public class ClientHandler extends Thread {
 
                 if (input.startsWith("CREATEGAME")) {
                     int size = Integer.parseInt(input.substring(10, 11));
-                    server.games.add(new Game(size));
-
+                    int bots = Integer.parseInt(input.substring(13, 14));
+                    server.games.add(new Game(size, bots));
                     sendToAllPlayers("CREATED");
 
                 } else if (input.startsWith("JOIN")) {
@@ -67,10 +67,15 @@ public class ClientHandler extends Thread {
                     if (game.connectedPlayers == game.totalplayers) {
                         game.currentPlayer = game.players[0];
                         sendToAllPlayersInGame("START");
+                        if (game.currentPlayer.isBot) {
+                            game.playBot(this);
+
+                        }
                         Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
                         if (temp.isPresent()) {
                             temp.get().out.println("YOURTURN");
                         }
+
                     }
                 } else if (input.startsWith("MOVE")) {
                     if (this.player == game.currentPlayer) {
@@ -83,9 +88,8 @@ public class ClientHandler extends Thread {
                         int targetY = Integer.parseInt(pawnpos2[1]);
 
                         if (game.validMove(pawnX, pawnY, targetX, targetY)) {
-
+                            game.move(pawnX, pawnY, targetX, targetY);
                             sendToAllPlayersInGame("MOVE" + " " + pawnpos1[0] + " " + pawnpos1[1] + " " + pawnpos2[0] + " " + pawnpos2[1]);
-
                         }
 
                     }
@@ -98,13 +102,15 @@ public class ClientHandler extends Thread {
                             game.currentPlayer.win = true;
                             Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
                             temp.ifPresent(clientHandler -> clientHandler.out.println("YOUWIN"));
-
                         }
 
                         if (game.nextPlayer()) {
+                            if (game.currentPlayer.isBot) game.playBot(this);
                             Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
-                            temp.ifPresent(clientHandler -> clientHandler.out.println("YOURTURN"));
+                            temp.ifPresent((clientHandler -> clientHandler.out.println("YOURTURN")));
                         }
+
+
                     }
                 }
             }

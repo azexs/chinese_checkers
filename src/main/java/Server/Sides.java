@@ -13,6 +13,10 @@ public enum Sides {
             return BOTTOM;
         }
 
+        public Field getCorner(AbstractBoard board) {
+            return board.getPawn(6, 0);
+        }
+
         public List<Field> getArea(AbstractBoard board) {
             List<Field> area = new ArrayList<Field>();
             area.add(board.getPawn(6, 0));
@@ -31,6 +35,11 @@ public enum Sides {
 
     },
     RIGHT_TOP {
+        @Override
+        public Field getCorner(AbstractBoard board) {
+            return board.getPawn(12, 4);
+        }
+
         @Override
         public Sides getOppositeSide() {
             return LEFT_BOTTOM;
@@ -55,6 +64,11 @@ public enum Sides {
     },
     RIGHT_BOTTOM {
         @Override
+        public Field getCorner(AbstractBoard board) {
+            return board.getPawn(12, 12);
+        }
+
+        @Override
         public Sides getOppositeSide() {
             return LEFT_TOP;
         }
@@ -77,6 +91,10 @@ public enum Sides {
 
     },
     BOTTOM {
+        public Field getCorner(AbstractBoard board) {
+            return board.getPawn(6, 16);
+        }
+
         @Override
         public Sides getOppositeSide() {
             return TOP;
@@ -101,6 +119,11 @@ public enum Sides {
     },
     LEFT_BOTTOM {
         @Override
+        public Field getCorner(AbstractBoard board) {
+            return board.getPawn(0, 12);
+        }
+
+        @Override
         public Sides getOppositeSide() {
             return RIGHT_TOP;
         }
@@ -121,8 +144,14 @@ public enum Sides {
             return area;
         }
 
+
     },
     LEFT_TOP {
+        @Override
+        public Field getCorner(AbstractBoard board) {
+            return board.getPawn(0, 4);
+        }
+
         @Override
         public Sides getOppositeSide() {
             return RIGHT_BOTTOM;
@@ -146,7 +175,7 @@ public enum Sides {
 
     };
 
-
+    public abstract Field getCorner(AbstractBoard board);
 
     public abstract Sides getOppositeSide();
 

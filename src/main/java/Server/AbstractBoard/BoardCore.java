@@ -18,74 +18,74 @@ public abstract class BoardCore implements Board {
     public void initializeBoard() {
         for (int x = 0; x < 13; x++) {
             for (int y = 0; y < 17; y++) {
-                board[x][y] = new Field(x, y);
+                board[x][y] = new Field(x, y, 2);
             }
         }
     }
 
     public void setMainTriangle() {
 
-        board[4][4].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[5][4].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[6][4].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[7][4].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[8][4].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[3][5].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[4][5].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[5][5].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[6][5].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[7][5].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[8][5].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[3][6].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[4][6].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[5][6].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[6][6].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[7][6].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[8][6].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[9][6].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[2][7].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[3][7].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[4][7].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[5][7].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[6][7].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[7][7].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[8][7].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[9][7].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[2][8].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[3][8].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[4][8].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[5][8].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[6][8].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[7][8].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[8][8].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[9][8].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[10][8].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[2][9].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[3][9].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[4][9].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[5][9].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[6][9].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[7][9].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[8][9].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[9][9].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[3][10].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[4][10].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[5][10].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[6][10].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[7][10].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[8][10].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[9][10].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[3][11].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[4][11].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[5][11].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[6][11].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[7][11].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[8][11].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[4][12].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[5][12].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[6][12].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[7][12].setColor(colours.get(6)).setStartSide(null).setPawn(false);
-        board[8][12].setColor(colours.get(6)).setStartSide(null).setPawn(false);
+        board[4][4].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[5][4].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[6][4].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[7][4].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[8][4].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[3][5].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[4][5].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[5][5].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[6][5].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[7][5].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[8][5].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[3][6].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[4][6].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[5][6].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[6][6].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[7][6].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[8][6].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[9][6].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[2][7].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[3][7].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[4][7].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[5][7].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[6][7].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[7][7].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[8][7].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[9][7].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[2][8].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[3][8].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[4][8].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[5][8].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[6][8].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[7][8].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[8][8].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[9][8].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[10][8].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[2][9].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[3][9].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[4][9].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[5][9].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[6][9].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[7][9].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[8][9].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[9][9].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[3][10].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[4][10].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[5][10].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[6][10].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[7][10].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[8][10].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[9][10].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[3][11].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[4][11].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[5][11].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[6][11].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[7][11].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[8][11].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[4][12].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[5][12].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[6][12].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[7][12].setColor(colours.get(6)).setStartSide(null).setPawn(0);
+        board[8][12].setColor(colours.get(6)).setStartSide(null).setPawn(0);
 
 
     }
