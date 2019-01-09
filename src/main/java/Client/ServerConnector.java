@@ -57,7 +57,7 @@ public class ServerConnector extends Thread {
                     Pawn temPawn = main.gameWindow.board.getPawn(par11, par12);
 
                     main.gameWindow.board.getPawn(par21, par22).setFill(temPawn.getFill());
-                    if (temPawn.getFill() == main.client.getColor()) out.println("NEXTPLAYER");
+                    //if (temPawn.getFill() == main.client.getColor()) out.println("NEXTPLAYER");
                     temPawn.setFill(Color.GREY);
 
                 } else if (response.startsWith("YOURTURN")) {

@@ -16,6 +16,8 @@ public class ClientHandler extends Thread {
     Server server;
     Game game;
     Player player;
+    
+    private Field currentPawn = null;
 
 
     public ClientHandler(Socket socket, Server server) throws IOException {
@@ -87,9 +89,18 @@ public class ClientHandler extends Thread {
                         int targetX = Integer.parseInt(pawnpos2[0]);
                         int targetY = Integer.parseInt(pawnpos2[1]);
 
-                        if (game.validMove(pawnX, pawnY, targetX, targetY)) {
-                            game.move(pawnX, pawnY, targetX, targetY);
-                            sendToAllPlayersInGame("MOVE" + " " + pawnpos1[0] + " " + pawnpos1[1] + " " + pawnpos2[0] + " " + pawnpos2[1]);
+                        if (currentPawn == null) {
+	                        if (game.validMove(pawnX, pawnY, targetX, targetY)) {
+	                            currentPawn = game.move(pawnX, pawnY, targetX, targetY);
+	                            sendToAllPlayersInGame("MOVE" + " " + pawnpos1[0] + " " + pawnpos1[1] + " " + pawnpos2[0] + " " + pawnpos2[1]);
+	                        }
+                        } else {
+                        	if (currentPawn == game.boardd[pawnX][pawnY] &&                		
+                        		(game.rules.possibleJumps(pawnX, pawnY)).contains(game.boardd[targetX][targetY]) &&
+                        		game.validMove(pawnX, pawnY, targetX, targetY)) {
+	                            currentPawn = game.move(pawnX, pawnY, targetX, targetY);
+	                            sendToAllPlayersInGame("MOVE" + " " + pawnpos1[0] + " " + pawnpos1[1] + " " + pawnpos2[0] + " " + pawnpos2[1]);
+	                        }
                         }
 
                     }
@@ -97,7 +108,9 @@ public class ClientHandler extends Thread {
                 } else if (input.startsWith("NEXTPLAYER")) {
                     if (this.player == game.currentPlayer) {
                         out.println("ENDROUND");
-
+                        
+                        currentPawn = null;
+                        
                         if ((game.checkWin(game.currentPlayer))) {
                             game.currentPlayer.win = true;
                             Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();

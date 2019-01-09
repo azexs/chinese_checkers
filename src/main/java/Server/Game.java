@@ -64,7 +64,7 @@ public class Game {
         return false;
     }
 
-    public void move(int pawnx, int pawny, int targetx, int targety) {
+    public Field move(int pawnx, int pawny, int targetx, int targety) {
         Field temp = boardd[pawnx][pawny];
 
         boardd[pawnx][pawny] = boardd[targetx][targety];
@@ -74,6 +74,8 @@ public class Game {
         boardd[targetx][targety] = temp;
         boardd[targetx][targety].x = targetx;
         boardd[targetx][targety].y = targety;
+        
+        return boardd[targetx][targety];
     }
 
 
