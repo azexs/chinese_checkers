@@ -1,14 +1,28 @@
 package Server;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Bot {
+	
+	private class Move {
+		public Field from, to;
+		public Move(Field from, Field to) 
+		{
+			this.from = from;
+			this.to = to;
+		}
+	}
+	
+	LinkedList<Move> moveHistory = new LinkedList<>();
+	private int moveMemory;
 
     Game game;
 
-    public Bot(Game game) {
+    public Bot(Game game, int memLim) {
         this.game = game;
+        moveMemory = memLim * 3;
     }
 
     public void playRound(ClientHandler gameConnector) {
@@ -17,6 +31,7 @@ public class Bot {
         double distance = -1000;
         Field startPawn = null;
         Field bestMove = null;
+        Move chosenMove = null;
 
         for (Field f : botPawns) {
             List<Field> possibleMoves = new ArrayList<Field>();
@@ -24,11 +39,18 @@ public class Bot {
             possibleMoves.addAll(game.rules.possibleSingleMoves(f.x, f.y, 1));
 
             for (Field possible : possibleMoves) {
+            	Move temp = new Move (f, possible);
+            	if (checkInHistory(temp)) {
+            		/*System.out.print("Skipped: (" + f.x + "," + f.y +
+            				")(" + possible.x + "," + possible.y + ")\n");*/
+            		continue;
+            	}
                 if (calcDistance(f.x, f.y, possible.x, possible.y) > distance) {
                     distance = calcDistance(f.x, f.y, possible.x, possible.y);
                     if (game.validMove(f.x, f.y, possible.x, possible.y)) {
                         startPawn = f;
                         bestMove = possible;
+                        chosenMove = temp;
                     }
                 }
             }
@@ -37,6 +59,9 @@ public class Bot {
         if (startPawn != null && bestMove != null) {
             if (game.validMove(startPawn.x, startPawn.y, bestMove.x, bestMove.y)) {
                 game.move(startPawn.x, startPawn.y, bestMove.x, bestMove.y);
+                addToHistory(chosenMove);
+                /*System.out.print("(" + chosenMove.from.x + "," + chosenMove.from.y + "),(" +
+                		chosenMove.to.x + "," + chosenMove.to.y + ")\n");*/
                 gameConnector.sendToAllPlayersInGame("MOVE" + " " + bestMove.x + " " + bestMove.y + " " + startPawn.x + " " + startPawn.y);
 
                 if (game.nextPlayer()) {
@@ -73,6 +98,28 @@ public class Bot {
         return botPawns;
 
 
+    }
+    
+    protected void addToHistory(Move chosenMove) {
+    	/*System.out.print("(" + chosenMove.from.x + "," + chosenMove.from.y + "),(" +
+        		chosenMove.to.x + "," + chosenMove.to.y + ")\n");*/
+    	moveHistory.addFirst(chosenMove);
+    	if (moveHistory.size() >= moveMemory) {
+    		//System.out.print(moveHistory.size() + "\n");
+    		moveHistory.removeLast();
+    	}
+    }
+    
+    protected boolean checkInHistory(Move chosenMove) {
+    	for (Move f : moveHistory) {
+    		if (chosenMove.from.x == f.from.x &&
+    			chosenMove.from.y == f.from.y &&
+    			chosenMove.to.x == f.to.x &&
+    			chosenMove.to.y == f.to.y) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
 

@@ -28,7 +28,7 @@ public class Game {
         rules = new Rules(this);
         boardd = board.getBoard();
         this.bots = bots;
-        if (bots > 0) botMovement = new Bot(this);
+        if (bots > 0) botMovement = new Bot(this, bots);
 
         addBots(bots);
     }

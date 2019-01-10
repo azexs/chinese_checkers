@@ -60,6 +60,11 @@ public class ClientHandler extends Thread {
                 } else if (input.startsWith("JOIN")) {
                     input = input.substring(4);
                     game = server.games.get(Integer.parseInt(input));
+                   
+                    if (game.connectedPlayers == game.totalplayers) {
+                    	continue;
+                    }
+                    
                     player = new Player(game.connectedPlayers, game.board.getBoard());
                     game.players[game.connectedPlayers] = player;
                     game.connectedPlayers++;
@@ -88,6 +93,7 @@ public class ClientHandler extends Thread {
                         int pawnY = Integer.parseInt(pawnpos1[1]);
                         int targetX = Integer.parseInt(pawnpos2[0]);
                         int targetY = Integer.parseInt(pawnpos2[1]);
+                       
 
                         if (currentPawn == null) {
 	                        if (game.validMove(pawnX, pawnY, targetX, targetY)) {
@@ -102,34 +108,39 @@ public class ClientHandler extends Thread {
 	                            sendToAllPlayersInGame("MOVE" + " " + pawnpos1[0] + " " + pawnpos1[1] + " " + pawnpos2[0] + " " + pawnpos2[1]);
 	                        }
                         }
+                        
+                        /*if (game.rules.possibleJumps(targetX, targetY).isEmpty()) {
+                        	endRound();
+                        }*/
+                        
 
                     }
 
-                } else if (input.startsWith("NEXTPLAYER")) {
-                    if (this.player == game.currentPlayer) {
-                        out.println("ENDROUND");
-                        
-                        currentPawn = null;
-                        
-                        if ((game.checkWin(game.currentPlayer))) {
-                            game.currentPlayer.win = true;
-                            Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
-                            temp.ifPresent(clientHandler -> clientHandler.out.println("YOUWIN"));
-                        }
-
-                        if (game.nextPlayer()) {
-                            if (game.currentPlayer.isBot) game.playBot(this);
-                            Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
-                            temp.ifPresent((clientHandler -> clientHandler.out.println("YOURTURN")));
-                        }
-
-
-                    }
+                } else if (input.startsWith("NEXTPLAYER") && this.player == game.currentPlayer) {
+                    endRound();
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    protected void endRound() {
+            out.println("ENDROUND");
+            
+            currentPawn = null;
+            
+            if ((game.checkWin(game.currentPlayer))) {
+                game.currentPlayer.win = true;
+                Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
+                temp.ifPresent(clientHandler -> clientHandler.out.println("YOUWIN"));
+            }
+
+            if (game.nextPlayer()) {
+                if (game.currentPlayer.isBot) game.playBot(this);
+                Optional<ClientHandler> temp = server.connectedClients.stream().filter(p -> p.player == game.currentPlayer).findFirst();
+                temp.ifPresent((clientHandler -> clientHandler.out.println("YOURTURN")));
+            }
     }
 
 
