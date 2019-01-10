@@ -26,7 +26,7 @@ public class Server {
         server.start();
     }
 
-    void start() throws IOException {
+    public void start() throws IOException {
         while (true) {
             ClientHandler newClient = new ClientHandler(serverSocket.accept(), this);
             this.connectedClients.add(newClient);

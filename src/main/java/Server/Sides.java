@@ -1,22 +1,22 @@
 package Server;
-
+ 
 import Server.AbstractBoard.AbstractBoard;
-
+ 
 import java.util.ArrayList;
 import java.util.List;
-
+ 
 public enum Sides {
-
+ 
     TOP {
         @Override
         public Sides getOppositeSide() {
             return BOTTOM;
         }
-
+ 
         public Field getCorner(AbstractBoard board) {
             return board.getPawn(6, 0);
         }
-
+ 
         public List<Field> getArea(AbstractBoard board) {
             List<Field> area = new ArrayList<Field>();
             area.add(board.getPawn(6, 0));
@@ -29,22 +29,22 @@ public enum Sides {
             area.add(board.getPawn(5, 3));
             area.add(board.getPawn(6, 3));
             area.add(board.getPawn(7, 3));
-
+ 
             return area;
         }
-
+ 
     },
     RIGHT_TOP {
         @Override
         public Field getCorner(AbstractBoard board) {
             return board.getPawn(12, 4);
         }
-
+ 
         @Override
         public Sides getOppositeSide() {
             return LEFT_BOTTOM;
         }
-
+ 
         public List<Field> getArea(AbstractBoard board) {
             List<Field> area = new ArrayList<Field>();
             area.add(board.getPawn(10, 7));
@@ -57,22 +57,22 @@ public enum Sides {
             area.add(board.getPawn(10, 4));
             area.add(board.getPawn(11, 4));
             area.add(board.getPawn(12, 4));
-
+ 
             return area;
         }
-
+ 
     },
     RIGHT_BOTTOM {
         @Override
         public Field getCorner(AbstractBoard board) {
             return board.getPawn(12, 12);
         }
-
+ 
         @Override
         public Sides getOppositeSide() {
             return LEFT_TOP;
         }
-
+ 
         public List<Field> getArea(AbstractBoard board) {
             List<Field> area = new ArrayList<Field>();
             area.add(board.getPawn(10, 9));
@@ -85,21 +85,21 @@ public enum Sides {
             area.add(board.getPawn(10, 12));
             area.add(board.getPawn(11, 12));
             area.add(board.getPawn(12, 12));
-
+ 
             return area;
         }
-
+ 
     },
     BOTTOM {
         public Field getCorner(AbstractBoard board) {
             return board.getPawn(6, 16);
         }
-
+ 
         @Override
         public Sides getOppositeSide() {
             return TOP;
         }
-
+ 
         public List<Field> getArea(AbstractBoard board) {
             List<Field> area = new ArrayList<Field>();
             area.add(board.getPawn(4, 13));
@@ -112,22 +112,22 @@ public enum Sides {
             area.add(board.getPawn(5, 15));
             area.add(board.getPawn(6, 15));
             area.add(board.getPawn(6, 16));
-
+ 
             return area;
         }
-
+ 
     },
     LEFT_BOTTOM {
         @Override
         public Field getCorner(AbstractBoard board) {
             return board.getPawn(0, 12);
         }
-
+ 
         @Override
         public Sides getOppositeSide() {
             return RIGHT_TOP;
         }
-
+ 
         public List<Field> getArea(AbstractBoard board) {
             List<Field> area = new ArrayList<Field>();
             area.add(board.getPawn(1, 9));
@@ -140,23 +140,23 @@ public enum Sides {
             area.add(board.getPawn(1, 12));
             area.add(board.getPawn(2, 12));
             area.add(board.getPawn(3, 12));
-
+ 
             return area;
         }
-
-
+ 
+ 
     },
     LEFT_TOP {
         @Override
         public Field getCorner(AbstractBoard board) {
             return board.getPawn(0, 4);
         }
-
+ 
         @Override
         public Sides getOppositeSide() {
             return RIGHT_BOTTOM;
         }
-
+ 
         public List<Field> getArea(AbstractBoard board) {
             List<Field> area = new ArrayList<Field>();
             area.add(board.getPawn(1, 7));
@@ -169,16 +169,16 @@ public enum Sides {
             area.add(board.getPawn(1, 4));
             area.add(board.getPawn(2, 4));
             area.add(board.getPawn(3, 4));
-
+ 
             return area;
         }
-
+ 
     };
-
+ 
     public abstract Field getCorner(AbstractBoard board);
-
+ 
     public abstract Sides getOppositeSide();
-
+ 
     public abstract List<Field> getArea(AbstractBoard board);
-
+ 
 }

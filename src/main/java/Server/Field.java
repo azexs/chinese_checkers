@@ -15,12 +15,12 @@ public class Field {
     public Field(int x, int y, int type) {
         this.x = x;
         this.y = y;
-        isPawn = type;
+        setIsPawn(type);
     }
 
 
     public Field setPawn(int i) {
-        isPawn = i;
+        setIsPawn(i);
         return this;
     }
 
@@ -34,6 +34,16 @@ public class Field {
         this.color = color;
         return this;
     }
+
+
+	public int getIsPawn() {
+		return isPawn;
+	}
+
+
+	public void setIsPawn(int isPawn) {
+		this.isPawn = isPawn;
+	}
 
 
 }

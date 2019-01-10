@@ -7,14 +7,14 @@ import java.util.List;
 
 public class Game {
 
-    int connectedPlayers;
+    public int connectedPlayers;
     int totalplayers;
     int bots;
-    Player[] players;
-    Player currentPlayer;
+    public Player[] players;
+    public Player currentPlayer;
 
-    AbstractBoard board;
-    Field[][] boardd;
+    public AbstractBoard board;
+    public Field[][] boardd;
 
     Rules rules;
     Bot botMovement;
@@ -42,7 +42,7 @@ public class Game {
         }
     }
 
-    void playBot(ClientHandler gameConnector) {
+    public void playBot(ClientHandler gameConnector) {
         botMovement.playRound(gameConnector);
     }
 
@@ -55,7 +55,7 @@ public class Game {
 
         //Check if pawn is pawn and target is empty field, then check if 'main'  pawn is in opposite side, if so, target must be in oppostie side
 
-        if ((pawn.isPawn == 1 || (target.isPawn == 0)) && (!fields.contains(pawn) || fields.contains(target))) {
+        if ((pawn.getIsPawn() == 1 || (target.getIsPawn() == 0)) && (!fields.contains(pawn) || fields.contains(target))) {
             if (rules.trymove(pawnx, pawny, targetx, targety)) {
                 return true;
             }

@@ -54,6 +54,7 @@ public class ClientHandler extends Thread {
                 if (input.startsWith("CREATEGAME")) {
                     int size = Integer.parseInt(input.substring(10, 11));
                     int bots = Integer.parseInt(input.substring(13, 14));
+                    if (bots >= size) continue;
                     server.games.add(new Game(size, bots));
                     sendToAllPlayers("CREATED");
 
@@ -61,7 +62,7 @@ public class ClientHandler extends Thread {
                     input = input.substring(4);
                     game = server.games.get(Integer.parseInt(input));
                    
-                    if (game.connectedPlayers == game.totalplayers) {
+                    if (game.connectedPlayers >= game.totalplayers) {
                     	continue;
                     }
                     

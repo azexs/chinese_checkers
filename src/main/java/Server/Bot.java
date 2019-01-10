@@ -22,7 +22,7 @@ public class Bot {
 
     public Bot(Game game, int memLim) {
         this.game = game;
-        moveMemory = memLim * 3;
+        moveMemory = memLim * 1;
     }
 
     public void playRound(ClientHandler gameConnector) {
@@ -36,6 +36,7 @@ public class Bot {
         for (Field f : botPawns) {
             List<Field> possibleMoves = new ArrayList<Field>();
             possibleMoves.addAll(game.rules.possibleJumps(f.x, f.y));
+            game.rules.possibleMoves.clear();
             possibleMoves.addAll(game.rules.possibleSingleMoves(f.x, f.y, 1));
 
             for (Field possible : possibleMoves) {
@@ -45,14 +46,16 @@ public class Bot {
             				")(" + possible.x + "," + possible.y + ")\n");*/
             		continue;
             	}
-                if (calcDistance(f.x, f.y, possible.x, possible.y) > distance) {
-                    distance = calcDistance(f.x, f.y, possible.x, possible.y);
-                    if (game.validMove(f.x, f.y, possible.x, possible.y)) {
-                        startPawn = f;
-                        bestMove = possible;
-                        chosenMove = temp;
-                    }
-                }
+            	if (checkidk(f.x, f.y, possible.x, possible.y) > 0) {
+	                if (calcDistance(f.x, f.y, possible.x, possible.y) > distance) {
+	                    distance = calcDistance(f.x, f.y, possible.x, possible.y);
+	                    if (game.validMove(f.x, f.y, possible.x, possible.y)) {
+	                        startPawn = f;
+	                        bestMove = possible;
+	                        chosenMove = temp;
+	                    }
+	                }
+            	}
             }
         }
 
@@ -62,6 +65,7 @@ public class Bot {
                 addToHistory(chosenMove);
                 /*System.out.print("(" + chosenMove.from.x + "," + chosenMove.from.y + "),(" +
                 		chosenMove.to.x + "," + chosenMove.to.y + ")\n");*/
+                if (gameConnector != null)
                 gameConnector.sendToAllPlayersInGame("MOVE" + " " + bestMove.x + " " + bestMove.y + " " + startPawn.x + " " + startPawn.y);
 
                 if (game.nextPlayer()) {
@@ -78,13 +82,24 @@ public class Bot {
 
 
     }
+    
+    double checkidk(int pawnx, int pawny, int targetx, int targety) {
+    	 
+        // Field target;
+  
+       //  if(game.currentPlayer.startSide.getOppositeSide().getCorner(game.board).color!=game.currentPlayer.color) {
+        //     target=
+       //  }
+  
+  
+       return  Math.abs((game.currentPlayer.startSide.getOppositeSide().getCorner(game.board).y - pawny)) - Math.abs((game.currentPlayer.startSide.getOppositeSide().getCorner(game.board).y - targety)) +
+                 Math.abs((game.currentPlayer.startSide.getOppositeSide().getCorner(game.board).x - pawnx)) - Math.abs((game.currentPlayer.startSide.getOppositeSide().getCorner(game.board).x - targetx));
+     }
 
 
     double calcDistance(int pawnx, int pawny, int targetx, int targety) {
-
-        return Math.sqrt(Math.pow(Math.abs(pawnx - targetx), 2) + Math.pow(Math.abs(pawny - targety), 2)) +
-                Math.abs((game.currentPlayer.startSide.getOppositeSide().getCorner(game.board).y - pawny)) - Math.abs((game.currentPlayer.startSide.getOppositeSide().getCorner(game.board).y - targety)) +
-                Math.abs((game.currentPlayer.startSide.getOppositeSide().getCorner(game.board).x - pawnx)) - Math.abs((game.currentPlayer.startSide.getOppositeSide().getCorner(game.board).x - targetx));
+    	 
+        return (Math.pow(Math.abs(pawnx - targetx), 2) + Math.pow(Math.abs(pawny - targety), 2)) ;
     }
 
     List<Field> setPawns() {
